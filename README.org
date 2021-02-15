@@ -1,0 +1,688 @@
+* Usage
+
+  - Clone this repo
+  - ~cd mvdict~
+  - ~./exe/mvdict~
+
+    #+begin_src shell
+      ~/CAREER/Spreetail/technical/ ./exe/mvdict
+
+      ┏(-_-)┛┗(-_-﻿ )┓ mvdict loaded ... ┗(-_-)┛┏(-_-)┓
+
+      >
+    #+end_src
+
+** keys
+   Returns all the keys in the dictionary.  Order is not guaranteed.
+
+   #+begin_src shell
+     > add 'foo', 'bar'
+     ) Added
+     > add 'baz', 'bang'
+     ) Added
+     > keys
+     1) foo
+     2) baz
+   #+end_src
+   
+** members
+   Returns the collection of strings for the given key.  Return order is not
+   guaranteed.  Returns an error if the key does not exists.
+
+   #+begin_src shell
+     > add 'foo', 'bar'
+     > add 'foo', 'baz'
+     > members 'foo'
+     1) bar
+     2) baz
+
+     > members 'bad'
+     ) ERROR, key does not exist.
+   #+end_src
+   
+** add
+   Add a member to a collection for a given key. Displays an error if the value
+   already existed in the collection. 
+
+   #+begin_src shell
+     > add 'foo', 'bar'
+     ) Added
+     > add 'foo', 'baz'
+     ) Added
+     > add 'foo', 'bar'
+     ) ERROR, value already exists
+   #+end_src
+
+** remove
+   Removes a value from a key.  If the last value is removed from the key, they
+   key is removed from the dictionary. If the key or value does not exist,
+   displays an error. 
+
+   #+begin_src shell
+     > add 'foo', 'bar'
+     ) Added
+     > add 'foo', 'baz'
+     ) Added
+
+     > remove 'foo', 'bar'  
+     ) Removed
+     > remove 'foo', 'bar'  
+     ) ERROR, value does not exist
+
+     > keys
+     1) foo
+
+     > remove 'foo', 'baz'
+     ) Removed
+
+     > keys
+     ) empty set
+
+     > remove 'boom'
+     ) ERROR, key does not exist
+   #+end_src
+
+** removeall
+   Removes all value for a key and removes the key from the dictionary.
+   Returns an error if the key does not exist.
+
+   #+begin_src shell
+     > add 'foo', 'bar'
+     ) Added
+     > add 'foo', 'baz'
+     ) Added
+     > keys
+     1) foo
+
+     > removeall 'foo'
+     ) Removed
+
+     > keys
+     (empty set)
+
+     removeall 'foo'
+     ) ERROR, key does not exist
+   #+end_src
+
+** clear
+   Removes all keys and all values from the dictionary.
+
+   #+begin_src shell
+     > add 'foo', 'bar'
+     ) Added
+     > add 'bang', 'zip'
+     ) Added
+     > keys
+     1) foo
+     2) bang
+
+     > clear
+     ) Cleared
+
+     > keys
+     (empty set)
+
+     > clear
+     ) Cleared
+
+     > keys
+     (empty set)
+
+   #+end_src
+   
+** keyexists
+   Returns whether a key exists or not. 
+
+   #+begin_src shell
+     > keyexists 'foo'
+     ) false
+     > add 'foo', 'bar'
+     ) Added
+     > keyexists 'foo'
+     ) true
+   #+end_src
+   
+** valueexists
+   Returns whether a value exists within a key.  Returns false if the key does not exist.
+
+   #+begin_src shell
+     > valueexists 'foo', 'bar'
+     ) false
+     > add 'foo', 'bar'
+     ) Added
+     > valueexists 'foo', 'bar'
+     ) true
+     > valueexists 'foo', 'baz'
+     ) false
+   #+end_src
+   
+** allmembers
+   Returns all the values in the dictionary.  Returns nothing if there are none.
+   Order is not guaranteed.
+
+   #+begin_src shell
+     > allmembers
+     (empty set)
+     > add 'foo', 'bar'
+     ) Added
+     > add 'foo', 'baz'
+     ) Added  
+     > allmembers
+     1) bar
+     2) baz
+     > add 'bang', 'bar'
+     ) Added
+     > add 'bang', 'baz'
+     > allmembers
+     1) bar
+     2) baz
+     3) bar
+     4) baz
+   #+end_src
+   
+** items
+   Returns all keys in the dictionary and all of their values.
+   Returns nothing if there are none.  Order is not guaranteed.
+
+   #+begin_src shell
+     > items
+     (empty set)
+     > add 'foo', 'bar'
+     ) Added
+     > add 'foo', 'baz'
+     ) Added  
+     > items
+     1) foo: bar
+     2) foo: baz
+     > add 'bang', 'bar'
+     ) Added
+     > add 'bang', 'baz'
+     > items
+     1) foo: bar
+     2) foo: baz
+     3) bang: bar
+     4) bang: baz
+   #+end_src
+  
+* NOTE
+
+  The current state requires the following to be considered ready for QA.
+  If you would like a peak at the development up to the current point,
+  some notes are archived in the raw version of this very README ~./README.org~
+  and also contains some roadmapping notes.
+
+  - [ ] rspec test coverage above 85%
+    - [ ] add simplecov
+  - [ ] basic linting is in place
+    - [ ] add pronto
+  - [ ] configured as a ruby gem with support for exe binaries
+    - [ ] manual testing
+    - [ ] update README with new install/usage information
+  - [ ] improve documentation
+    - [ ] add yardoc
+
+* Planning Work Notes :noexport:
+** Work Sample
+
+   [[./work_sample.md]]
+
+   [[Specification]]
+  
+   The ~Multi-Value Dictionary~ app is a command line application that stores a multivalue
+   dictionary in memory.  All keys and values are strings. 
+
+*** Setup
+
+    ~git clone ...mvdict.git~
+    ~gem build mvdict.gemspec~
+    ~gem install mvdict.0.0.1.gem~
+
+*** Usage
+
+    #+begin_src shell
+      mvdict
+
+      mvdict loaded...
+
+      > 
+    #+end_src
+
+    [[Specification][Available Commands]]
+   
+*** Specification   
+  
+   It should support the following commands.
+
+**** KEYS
+     Returns all the keys in the dictionary.  Order is not guaranteed.
+
+     #+begin_src shell
+       > ADD foo bar
+       ) Added
+       > ADD baz bang
+       ) Added
+       > KEYS
+       1) foo
+       2) baz
+     #+end_src
+   
+**** MEMBERS
+     Returns the collection of strings for the given key.  Return order is not
+     guaranteed.  Returns an error if the key does not exists.
+
+     #+begin_src shell
+       > ADD foo bar
+       > ADD foo baz
+       > MEMBERS foo
+       1) bar
+       2) baz
+
+       > MEMBERS bad
+       ) ERROR, key does not exist.
+     #+end_src
+   
+**** ADD
+     Add a member to a collection for a given key. Displays an error if the value
+     already existed in the collection. 
+
+     #+begin_src shell
+       > ADD foo bar
+       ) Added
+       > ADD foo baz
+       ) Added
+       > ADD foo bar
+       ) ERROR, value already exists
+     #+end_src
+
+**** REMOVE
+     Removes a value from a key.  If the last value is removed from the key, they
+     key is removed from the dictionary. If the key or value does not exist,
+     displays an error. 
+
+     #+begin_src shell
+       > ADD foo bar
+       ) Added
+       > ADD foo baz
+       ) Added
+
+       > REMOVE foo bar  
+       ) Removed
+       > REMOVE foo bar  
+       ) ERROR, value does not exist
+
+       > KEYS
+       1) foo
+
+       > REMOVE foo baz
+       ) Removed
+
+       > KEYS
+       ) empty set
+
+       > REMOVE boom
+       ) ERROR, key does not exist
+     #+end_src
+
+**** REMOVEALL
+     Removes all value for a key and removes the key from the dictionary.
+     Returns an error if the key does not exist.
+
+     #+begin_src shell
+       > ADD foo bar
+       ) Added
+       > ADD foo baz
+       ) Added
+       > KEYS
+       1) foo
+
+       > REMOVEALL foo
+       ) Removed
+
+       > KEYS
+       (empty set)
+
+       REMOVEALL foo
+       ) ERROR, key does not exist
+     #+end_src
+
+**** CLEAR
+     Removes all keys and all values from the dictionary.
+
+     #+begin_src shell
+       > ADD foo bar
+       ) Added
+       > ADD bang zip
+       ) Added
+       > KEYS
+       1) foo
+       2) bang
+
+       > CLEAR
+       ) Cleared
+
+       > KEYS
+       (empty set)
+
+       > CLEAR
+       ) Cleared
+
+       > KEYS
+       (empty set)
+
+     #+end_src
+   
+**** KEYEXISTS
+     Returns whether a key exists or not. 
+
+     #+begin_src shell
+       > KEYEXISTS foo
+       ) false
+       > ADD foo bar
+       ) Added
+       > KEYEXISTS foo
+       ) true
+     #+end_src
+   
+**** VALUEEXISTS
+     Returns whether a value exists within a key.  Returns false if the key does not exist.
+
+     #+begin_src shell
+       > VALUEEXISTS foo bar
+       ) false
+       > ADD foo bar
+       ) Added
+       > VALUEEXISTS foo bar
+       ) true
+       > VALUEEXISTS foo baz
+       ) false
+     #+end_src
+   
+**** ALLMEMBERS
+     Returns all the values in the dictionary.  Returns nothing if there are none.
+     Order is not guaranteed.
+
+     #+begin_src shell
+       > ALLMEMBERS
+       (empty set)
+       > ADD foo bar
+       ) Added
+       > ADD foo baz
+       ) Added  
+       > ALLMEMBERS
+       1) bar
+       2) baz
+       > ADD bang bar
+       ) Added
+       > ADD bang baz
+       > ALLMEMBERS
+       1) bar
+       2) baz
+       3) bar
+       4) baz
+     #+end_src
+   
+**** ITEMS
+     Returns all keys in the dictionary and all of their values.
+     Returns nothing if there are none.  Order is not guaranteed.
+
+     #+begin_src shell
+       > ITEMS
+       (empty set)
+       > ADD foo bar
+       ) Added
+       > ADD foo baz
+       ) Added  
+       > ITEMS
+       1) foo: bar
+       2) foo: baz
+       > ADD bang bar
+       ) Added
+       > ADD bang baz
+       > ITEMS
+       1) foo: bar
+       2) foo: baz
+       3) bang: bar
+       4) bang: baz
+     #+end_src
+
+*** Architecture
+
+    - type :: ruby library
+
+**** Structure
+
+     - [[./Gemfile]]
+       - [ ] need to point to gemspect
+     - mvdict.gemspec
+     - bin
+     - exe
+     - lib
+       - mvdict.rb
+       - version.rb
+       - mvdict
+         - utils.rb
+         - utils
+           - cli.rb
+             - [ ] require 'tty-prompt'
+           - cli
+   
+*** Dependencies
+
+    [[./Gemfile]]
+   
+    https://github.com/piotrmurach/tty-prompt
+   
+*** Roadmap
+
+    - [ ] how much effort to I want to put in to match the print style in the specification?
+      - ie
+        - ~ADD~ vs ~add~
+        - ~ADD foo bar~ vs ~add 'foo', 'bar'~
+        - ~) result~ vs ~result~
+        - etc
+    
+*** nb                                                             :noexport:
+
+    [[./tmp/TEMP]]
+   
+   #+begin_src markdown
+     The Multi-Value Dictionary app is a command line application that stores a multivalue dictionary in memory.  All keys and values are strings. 
+
+     It should support the following commands.
+
+     ### KEYS
+     Returns all the keys in the dictionary.  Order is not guaranteed.
+
+     Example
+     ```
+     > ADD foo bar
+     ) Added
+     > ADD baz bang
+     ) Added
+     > KEYS
+     1) foo
+     2) baz
+     ```
+
+     ### MEMBERS
+     Returns the collection of strings for the given key.  Return order is not guaranteed.  Returns an error if the key does not exists.
+
+     Example:
+     ```
+     > ADD foo bar
+     > ADD foo baz
+     > MEMBERS foo
+     1) bar
+     2) baz
+
+     > MEMBERS bad
+     ) ERROR, key does not exist.
+     ```
+
+     ### ADD
+     Add a member to a collection for a given key. Displays an error if the value already existed in the collection. 
+
+     ```  
+     > ADD foo bar
+     ) Added
+     > ADD foo baz
+     ) Added
+     > ADD foo bar
+     ) ERROR, value already exists
+     ```
+
+     ### REMOVE
+     Removes a value from a key.  If the last value is removed from the key, they key is removed from the dictionary. If the key or value does not exist, displays an error. 
+
+     Example:
+     ```
+     > ADD foo bar
+     ) Added
+     > ADD foo baz
+     ) Added
+
+     > REMOVE foo bar  
+     ) Removed
+     > REMOVE foo bar  
+     ) ERROR, value does not exist
+
+     > KEYS
+     1) foo
+
+     > REMOVE foo baz
+     ) Removed
+
+     > KEYS
+     ) empty set
+
+     > REMOVE boom
+     ) ERROR, key does not exist
+     ```
+
+     ### REMOVEALL
+     Removes all value for a key and removes the key from the dictionary. Returns an error if the key does not exist.
+
+     Example:
+     ```
+     > ADD foo bar
+     ) Added
+     > ADD foo baz
+     ) Added
+     > KEYS
+     1) foo
+
+     > REMOVEALL foo
+     ) Removed
+
+     > KEYS
+     (empty set)
+
+     REMOVEALL foo
+     ) ERROR, key does not exist
+
+     ```
+
+     ### CLEAR
+     Removes all keys and all values from the dictionary.
+
+     Example:
+     ```
+     > ADD foo bar
+     ) Added
+     > ADD bang zip
+     ) Added
+     > KEYS
+     1) foo
+     2) bang
+
+     > CLEAR
+     ) Cleared
+
+     > KEYS
+     (empty set)
+
+     > CLEAR
+     ) Cleared
+
+     > KEYS
+     (empty set)
+
+     ```
+
+     ### KEYEXISTS
+     Returns whether a key exists or not. 
+
+     Example:
+     ```
+     > KEYEXISTS foo
+     ) false
+     > ADD foo bar
+     ) Added
+     > KEYEXISTS foo
+     ) true
+     ```
+
+     ### VALUEEXISTS
+     Returns whether a value exists within a key.  Returns false if the key does not exist.
+
+     Example:
+     ```
+     > VALUEEXISTS foo bar
+     ) false
+     > ADD foo bar
+     ) Added
+     > VALUEEXISTS foo bar
+     ) true
+     > VALUEEXISTS foo baz
+     ) false
+     ```
+
+     ### ALLMEMBERS
+     Returns all the values in the dictionary.  Returns nothing if there are none. Order is not guaranteed.
+
+     Example:
+     ```
+     > ALLMEMBERS
+     (empty set)
+     > ADD foo bar
+     ) Added
+     > ADD foo baz
+     ) Added  
+     > ALLMEMBERS
+     1) bar
+     2) baz
+     > ADD bang bar
+     ) Added
+     > ADD bang baz
+     > ALLMEMBERS
+     1) bar
+     2) baz
+     3) bar
+     4) baz
+     ```
+
+     ### ITEMS
+     Returns all keys in the dictionary and all of their values.  Returns nothing if there are none.  Order is not guaranteed.
+
+     Example:
+     ```
+     > ITEMS
+     (empty set)
+     > ADD foo bar
+     ) Added
+     > ADD foo baz
+     ) Added  
+     > ITEMS
+     1) foo: bar
+     2) foo: baz
+     > ADD bang bar
+     ) Added
+     > ADD bang baz
+     > ITEMS
+     1) foo: bar
+     2) foo: baz
+     3) bang: bar
+     4) bang: baz
+     ```  
+   #+end_src
+

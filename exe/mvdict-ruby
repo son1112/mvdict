@@ -1,0 +1,6 @@
+#!/usr/bin/ruby
+
+# require 'mvdict'
+require_relative '../lib/mvdict/mvdict.rb'
+
+MvDict.run
