@@ -1,7 +1,13 @@
-* Usage
+* Requirements
 
+  - ruby > 2.5
+
+* Usage
+  
   - Clone this repo
   - ~cd mvdict~
+  - ~gem install bundler~
+    - if not already installed
   - ~bundle install~
   - ~./exe/mvdict~
 
