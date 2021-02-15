@@ -2,6 +2,7 @@
 
   - Clone this repo
   - ~cd mvdict~
+  - ~bundle install~
   - ~./exe/mvdict~
 
     #+begin_src shell
@@ -208,8 +209,7 @@
 
   The current state requires the following to be considered ready for QA.
   If you would like a peak at the development up to the current point,
-  some notes are archived in the raw version of this very README ~./README.org~
-  and also contains some roadmapping notes.
+  some notes below that also contain some roadmap notes.
 
   - [ ] rspec test coverage above 85%
     - [ ] add simplecov
