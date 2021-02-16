@@ -232,9 +232,13 @@
 
       Coverage report generated for RSpec to /Users/sonander/projects/career/Spreetail/technical/coverage. 209 / 237 LOC (88.19%) covered.
     #+end_src
-  
-  - [ ] basic linting is in place
-    - [ ] add pronto
+
+  - [ ] add github workflow actions
+    - [ ] rspec
+    - [ ] pronto
+    - [ ] coverage threshold
+  - [X] basic linting is in place
+    - [X] add pronto
   - [ ] configured as a ruby gem with support for exe binaries
     - [ ] manual testing
     - [ ] update README with new install/usage information

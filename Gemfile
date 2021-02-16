@@ -10,4 +10,7 @@ group :development do
   gem 'pry-byebug'
   gem 'rspec'
   gem 'simplecov', require: false, group: :test
+  gem 'pronto'
+  gem 'pronto-rubocop', require: false
+  gem 'pronto-reek', require: false
 end
