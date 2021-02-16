@@ -217,8 +217,22 @@
   If you would like a peak at the development up to the current point,
   some notes below that also contain some roadmap notes.
 
-  - [ ] rspec test coverage above 85%
-    - [ ] add simplecov
+  - [X] add simplecov
+  - [ ] rspec test coverage above 90%
+
+    Current coverage (Mon Feb 15 22:47:41 CST 2021) *88.19%*
+  
+    #+name: coverage Mon Feb 15 22:47:05 CST 2021
+    #+begin_src text
+      ~/CAREER/Spreetail/technical/ bundle exec rspec
+      ............................
+
+      Finished in 0.01321 seconds (files took 0.38032 seconds to load)
+      28 examples, 0 failures
+
+      Coverage report generated for RSpec to /Users/sonander/projects/career/Spreetail/technical/coverage. 209 / 237 LOC (88.19%) covered.
+    #+end_src
+  
   - [ ] basic linting is in place
     - [ ] add pronto
   - [ ] configured as a ruby gem with support for exe binaries

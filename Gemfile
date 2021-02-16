@@ -9,4 +9,5 @@ group :development do
   gem 'pry'
   gem 'pry-byebug'
   gem 'rspec'
+  gem 'simplecov', require: false, group: :test
 end
