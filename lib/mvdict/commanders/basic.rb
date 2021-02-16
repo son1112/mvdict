@@ -7,8 +7,8 @@ class MvDict
 
       attr_reader :dictionary
 
-      def initialize(dictionary = Hash.new([]))
-        @dictionary = dictionary
+      def initialize(dictionary = nil)
+        @dictionary = dictionary || new_dictionary
       end
 
       # Returns all the keys in the dictionary.
@@ -59,7 +59,7 @@ class MvDict
 
       # Removes all keys and all values from the dictionary.
       def clear
-        @dictionary = Hash.new([])
+        reset_dictionary
         'Cleared'
       end
 
@@ -105,6 +105,14 @@ class MvDict
       end
 
       private
+
+      def reset_dictionary
+        @dictionary = new_dictionary
+      end
+
+      def new_dictionary
+        Hash.new { |hash, key| hash[key] = [] }
+      end
 
       def existing_keys
         @dictionary.keys

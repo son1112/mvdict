@@ -2,17 +2,17 @@
 
   - ruby > 2.5
 
-* Usage
-  
+* Setup
+
   - Clone this repo
-  - ~cd mvdict~
-  - ~gem install bundler~
-    - if not already installed
-  - ~bundle install~
-  - ~./exe/mvdict~
+  - ~cd mvdict~    
+  - ~gem build mvdict.gemspec~
+  - ~gem install mvdict.0.3.5.gem~
+  
+* Usage
 
     #+begin_src shell
-      ~/CAREER/Spreetail/technical/ ./exe/mvdict
+      ~/CAREER/Spreetail/technical/ mvdict
 
       ┏(-_-)┛┗(-_-﻿ )┓ mvdict loaded ... ┗(-_-)┛┏(-_-)┓
 
@@ -31,7 +31,7 @@
      1) foo
      2) baz
    #+end_src
-   
+
 ** members
    Returns the collection of strings for the given key.  Return order is not
    guaranteed.  Returns an error if the key does not exists.
@@ -46,10 +46,10 @@
      > members 'bad'
      ) ERROR, key does not exist.
    #+end_src
-   
+
 ** add
    Add a member to a collection for a given key. Displays an error if the value
-   already existed in the collection. 
+   already existed in the collection.
 
    #+begin_src shell
      > add 'foo', 'bar'
@@ -63,7 +63,7 @@
 ** remove
    Removes a value from a key.  If the last value is removed from the key, they
    key is removed from the dictionary. If the key or value does not exist,
-   displays an error. 
+   displays an error.
 
    #+begin_src shell
      > add 'foo', 'bar'
@@ -71,9 +71,9 @@
      > add 'foo', 'baz'
      ) Added
 
-     > remove 'foo', 'bar'  
+     > remove 'foo', 'bar'
      ) Removed
-     > remove 'foo', 'bar'  
+     > remove 'foo', 'bar'
      ) ERROR, value does not exist
 
      > keys
@@ -136,9 +136,9 @@
      (empty set)
 
    #+end_src
-   
+
 ** keyexists
-   Returns whether a key exists or not. 
+   Returns whether a key exists or not.
 
    #+begin_src shell
      > keyexists 'foo'
@@ -148,7 +148,7 @@
      > keyexists 'foo'
      ) true
    #+end_src
-   
+
 ** valueexists
    Returns whether a value exists within a key.  Returns false if the key does not exist.
 
@@ -162,7 +162,7 @@
      > valueexists 'foo', 'baz'
      ) false
    #+end_src
-   
+
 ** allmembers
    Returns all the values in the dictionary.  Returns nothing if there are none.
    Order is not guaranteed.
@@ -173,7 +173,7 @@
      > add 'foo', 'bar'
      ) Added
      > add 'foo', 'baz'
-     ) Added  
+     ) Added
      > allmembers
      1) bar
      2) baz
@@ -186,7 +186,7 @@
      3) bar
      4) baz
    #+end_src
-   
+
 ** items
    Returns all keys in the dictionary and all of their values.
    Returns nothing if there are none.  Order is not guaranteed.
@@ -197,7 +197,7 @@
      > add 'foo', 'bar'
      ) Added
      > add 'foo', 'baz'
-     ) Added  
+     ) Added
      > items
      1) foo: bar
      2) foo: baz
@@ -210,7 +210,15 @@
      3) bang: bar
      4) bang: baz
    #+end_src
-  
+
+* Testing
+
+  ~bundle exec rspec~
+
+* Quality Control
+
+  ~bundle exec pronto run~
+
 * NOTE
 
   The current state requires the following to be considered ready for QA.
@@ -221,7 +229,7 @@
   - [ ] rspec test coverage above 90%
 
     Current coverage (Mon Feb 15 22:47:41 CST 2021) *88.19%*
-  
+
     #+name: coverage Mon Feb 15 22:47:05 CST 2021
     #+begin_src text
       ~/CAREER/Spreetail/technical/ bundle exec rspec
@@ -232,34 +240,51 @@
 
       Coverage report generated for RSpec to /Users/sonander/projects/career/Spreetail/technical/coverage. 209 / 237 LOC (88.19%) covered.
     #+end_src
-
   - [ ] add github workflow actions
     - [ ] rspec
     - [ ] pronto
     - [ ] coverage threshold
   - [X] basic linting is in place
     - [X] add pronto
-  - [ ] configured as a ruby gem with support for exe binaries
-    - [ ] manual testing
-    - [ ] update README with new install/usage information
+  - [X] configured as a ruby gem with support for exe binaries
+    - [X] manual testing
+    - [X] update README with new install/usage information
   - [ ] improve documentation
     - [ ] add yardoc
+  - [ ] tighten up dependency versioning
 
+    #+begin_src text
+      $ gem build mvdict.gemspec
+  
+      WARNING:  open-ended dependency on tty-prompt (>= 0) is not recommended
+        use a bounded requirement, such as '~> x.y'
+      WARNING:  open-ended dependency on pry (>= 0, development) is not recommended
+        use a bounded requirement, such as '~> x.y'
+      WARNING:  open-ended dependency on pry-byebug (>= 0, development) is not recommended
+        use a bounded requirement, such as '~> x.y'
+      WARNING:  open-ended dependency on simplecov (>= 0, development) is not recommended
+        use a bounded requirement, such as '~> x.y'
+      WARNING:  open-ended dependency on pronto (>= 0, development) is not recommended
+        use a bounded requirement, such as '~> x.y'
+      WARNING:  open-ended dependency on pronto-rubocop (>= 0, development) is not recommended
+        use a bounded requirement, such as '~> x.y'
+      WARNING:  open-ended dependency on pronto-reek (>= 0, development) is not recommended
+        use a bounded requirement, such as '~> x.y'
+      WARNING:  See https://guides.rubygems.org/specification-reference/ for help
+    #+end_src
+  
+* --------------------------------------------------------------------------
+  
 * Planning Work Notes :noexport:
 ** Work Sample
 
    [[./work_sample.md]]
 
    [[Specification]]
-  
+
    The ~Multi-Value Dictionary~ app is a command line application that stores a multivalue
-   dictionary in memory.  All keys and values are strings. 
+   dictionary in memory.  All keys and values are strings.
 
-*** Setup
-
-    ~git clone ...mvdict.git~
-    ~gem build mvdict.gemspec~
-    ~gem install mvdict.0.0.1.gem~
 
 *** Usage
 
@@ -268,13 +293,13 @@
 
       mvdict loaded...
 
-      > 
+      >
     #+end_src
 
     [[Specification][Available Commands]]
-   
-*** Specification   
-  
+
+*** Specification
+
    It should support the following commands.
 
 **** KEYS
@@ -289,7 +314,7 @@
        1) foo
        2) baz
      #+end_src
-   
+
 **** MEMBERS
      Returns the collection of strings for the given key.  Return order is not
      guaranteed.  Returns an error if the key does not exists.
@@ -304,10 +329,10 @@
        > MEMBERS bad
        ) ERROR, key does not exist.
      #+end_src
-   
+
 **** ADD
      Add a member to a collection for a given key. Displays an error if the value
-     already existed in the collection. 
+     already existed in the collection.
 
      #+begin_src shell
        > ADD foo bar
@@ -321,7 +346,7 @@
 **** REMOVE
      Removes a value from a key.  If the last value is removed from the key, they
      key is removed from the dictionary. If the key or value does not exist,
-     displays an error. 
+     displays an error.
 
      #+begin_src shell
        > ADD foo bar
@@ -329,9 +354,9 @@
        > ADD foo baz
        ) Added
 
-       > REMOVE foo bar  
+       > REMOVE foo bar
        ) Removed
-       > REMOVE foo bar  
+       > REMOVE foo bar
        ) ERROR, value does not exist
 
        > KEYS
@@ -394,9 +419,9 @@
        (empty set)
 
      #+end_src
-   
+
 **** KEYEXISTS
-     Returns whether a key exists or not. 
+     Returns whether a key exists or not.
 
      #+begin_src shell
        > KEYEXISTS foo
@@ -406,7 +431,7 @@
        > KEYEXISTS foo
        ) true
      #+end_src
-   
+
 **** VALUEEXISTS
      Returns whether a value exists within a key.  Returns false if the key does not exist.
 
@@ -420,7 +445,7 @@
        > VALUEEXISTS foo baz
        ) false
      #+end_src
-   
+
 **** ALLMEMBERS
      Returns all the values in the dictionary.  Returns nothing if there are none.
      Order is not guaranteed.
@@ -431,7 +456,7 @@
        > ADD foo bar
        ) Added
        > ADD foo baz
-       ) Added  
+       ) Added
        > ALLMEMBERS
        1) bar
        2) baz
@@ -444,7 +469,7 @@
        3) bar
        4) baz
      #+end_src
-   
+
 **** ITEMS
      Returns all keys in the dictionary and all of their values.
      Returns nothing if there are none.  Order is not guaranteed.
@@ -455,7 +480,7 @@
        > ADD foo bar
        ) Added
        > ADD foo baz
-       ) Added  
+       ) Added
        > ITEMS
        1) foo: bar
        2) foo: baz
@@ -489,13 +514,13 @@
            - cli.rb
              - [ ] require 'tty-prompt'
            - cli
-   
+
 *** Dependencies
 
     [[./Gemfile]]
-   
+
     https://github.com/piotrmurach/tty-prompt
-   
+
 *** Roadmap
 
     - [ ] how much effort to I want to put in to match the print style in the specification?
@@ -504,13 +529,13 @@
         - ~ADD foo bar~ vs ~add 'foo', 'bar'~
         - ~) result~ vs ~result~
         - etc
-    
+
 *** nb                                                             :noexport:
 
     [[./tmp/TEMP]]
-   
+
    #+begin_src markdown
-     The Multi-Value Dictionary app is a command line application that stores a multivalue dictionary in memory.  All keys and values are strings. 
+     The Multi-Value Dictionary app is a command line application that stores a multivalue dictionary in memory.  All keys and values are strings.
 
      It should support the following commands.
 
@@ -544,9 +569,9 @@
      ```
 
      ### ADD
-     Add a member to a collection for a given key. Displays an error if the value already existed in the collection. 
+     Add a member to a collection for a given key. Displays an error if the value already existed in the collection.
 
-     ```  
+     ```
      > ADD foo bar
      ) Added
      > ADD foo baz
@@ -556,7 +581,7 @@
      ```
 
      ### REMOVE
-     Removes a value from a key.  If the last value is removed from the key, they key is removed from the dictionary. If the key or value does not exist, displays an error. 
+     Removes a value from a key.  If the last value is removed from the key, they key is removed from the dictionary. If the key or value does not exist, displays an error.
 
      Example:
      ```
@@ -565,9 +590,9 @@
      > ADD foo baz
      ) Added
 
-     > REMOVE foo bar  
+     > REMOVE foo bar
      ) Removed
-     > REMOVE foo bar  
+     > REMOVE foo bar
      ) ERROR, value does not exist
 
      > KEYS
@@ -634,7 +659,7 @@
      ```
 
      ### KEYEXISTS
-     Returns whether a key exists or not. 
+     Returns whether a key exists or not.
 
      Example:
      ```
@@ -671,7 +696,7 @@
      > ADD foo bar
      ) Added
      > ADD foo baz
-     ) Added  
+     ) Added
      > ALLMEMBERS
      1) bar
      2) baz
@@ -695,7 +720,7 @@
      > ADD foo bar
      ) Added
      > ADD foo baz
-     ) Added  
+     ) Added
      > ITEMS
      1) foo: bar
      2) foo: baz
@@ -707,6 +732,5 @@
      2) foo: baz
      3) bang: bar
      4) bang: baz
-     ```  
+     ```
    #+end_src
-
