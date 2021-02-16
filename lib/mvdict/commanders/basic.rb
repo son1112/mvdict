@@ -31,7 +31,7 @@ class MvDict
       # Add a member to a collection for a given key.
       # Displays an error if the value already existed in the collection.
       def add(key, value)
-        raise DUPLICATE_VALUE_ERROR if @dictionary[key].include?(value)
+        raise DUPLICATE_VALUE_ERROR if value_exists?(key, value)
 
         @dictionary[key] << value
         'Added'
@@ -42,7 +42,7 @@ class MvDict
       # If the key or value does not exist, displays an error.
       def remove(key, value)
         raise MISSING_KEY_ERROR unless key_exists?(key)
-        raise MISSING_VALUE_ERROR unless @dictionary[key].include?(value)
+        raise MISSING_VALUE_ERROR unless value_exists?(key, value)
 
         @dictionary[key].delete(value)
         'Removed'
@@ -53,14 +53,13 @@ class MvDict
       def removeall(key)
         raise MISSING_KEY_ERROR unless key_exists?(key)
 
-        @dictionary[key] = []
         @dictionary.delete(key)
         'Removed'
       end
 
       # Removes all keys and all values from the dictionary.
       def clear
-        @dictionary = {}
+        @dictionary = Hash.new([])
         'Cleared'
       end
 

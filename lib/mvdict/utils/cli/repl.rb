@@ -62,20 +62,3 @@ class MvDict
     end
   end
 end
-
-# command = read
-# result = self.instance_eval(command)
-# print ') '
-# print result
-# print(") #{result}")
-
-# command = ->() { eval(read) }
-
-# print(") #{command.call}")
-# print(") #{eval(read)}")
-
-# print(
-#   self.instance_eval(<<'EOS'
-#     command = read
-#   )
-# )
