@@ -1,3 +1,10 @@
+* About
+
+  The *Multi-Value Dictionary* app is a command line application that stores a multivalue
+  dictionary in memory.  All keys and values are strings.
+
+  [[./mvdict.gif]]
+  
 * Requirements
 
   - ruby > 2.5
@@ -226,6 +233,11 @@
   some notes below that also contain some roadmap notes.
 
   - [X] add simplecov
+  - [X] basic linting is in place
+    - [X] add pronto
+  - [X] configured as a ruby gem with support for exe binaries
+    - [X] manual testing
+    - [X] update README with new install/usage information
   - [ ] rspec test coverage above 90%
 
     Current coverage (Mon Feb 15 22:47:41 CST 2021) *88.19%*
@@ -244,11 +256,7 @@
     - [ ] rspec
     - [ ] pronto
     - [ ] coverage threshold
-  - [X] basic linting is in place
-    - [X] add pronto
-  - [X] configured as a ruby gem with support for exe binaries
-    - [X] manual testing
-    - [X] update README with new install/usage information
+    - [ ] pr template
   - [ ] improve documentation
     - [ ] add yardoc
   - [ ] tighten up dependency versioning
@@ -284,7 +292,6 @@
 
    The ~Multi-Value Dictionary~ app is a command line application that stores a multivalue
    dictionary in memory.  All keys and values are strings.
-
 
 *** Usage
 
